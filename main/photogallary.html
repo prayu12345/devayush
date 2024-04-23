@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prayu Gallery</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #ff7300, #ff002e, #ff00b5, #7a00ff, #0079ff, #00fff4);
+            animation: rainbow 10s infinite;
+        }
+
+        @keyframes rainbow {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .gallery {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 90%;
+            margin-top: 20px;
+            margin-left: 5px;
+        }
+
+        h1 {
+            font-weight: bold;
+            color: white;
+            text-align: center;
+            margin-bottom: 0px;
+            margin-top: 70px;
+        }
+
+        .image-container {
+            position: relative;
+            text-align: center;
+            margin-left: 0px;
+        }
+
+        .frame {
+            background-image: url('x.png'); /* Path to your frame image */
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            padding: 40px; /* Adjust padding as needed */
+            border-radius: 20px; /* Adjust border radius as needed */
+            max-width: 80%; /* Ensure the frame doesn't exceed its container */
+        }
+
+        .image {
+            margin: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            max-width: 80%;
+            height: 400px; /* Ensure image height adjusts proportionally */
+            object-fit: contain; /* Ensure the image maintains its aspect ratio */
+        }
+
+        .image:hover {
+            transform: scale(1.1);
+        }
+
+        .button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 20px 50px;
+            cursor: pointer;
+            border-radius: 10px;
+            font-size: 25px;
+            transition: background-color 0.3s ease;
+            margin-top: 0px;
+            margin-bottom: 100px;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Balloon animation */
+        .balloon {
+            position: absolute;
+            top: -100px; /* Start position above the screen */
+            left: 50%; /* Centered horizontally */
+            animation: fly 5s ease forwards; /* Animation name, duration, and timing function */
+            transform: translateX(-50%); /* Center the balloon */
+        }
+
+        @keyframes fly {
+            0% {
+                top: -100px; /* Start position above the screen */
+                transform: translateX(-50%) translateY(0); /* Center horizontally */
+            }
+            50% {
+                top: 50%; /* Middle of the screen */
+                transform: translateX(-50%) translateY(-50%); /* Center vertically */
+            }
+            100% {
+                top: 100%; /* Below the screen */
+                transform: translateX(-50%) translateY(-100%); /* Move above the screen */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="gallery">
+        <h1>Prayu Memories Gallery</h1>
+        <div class="image-container">
+            <div class="frame">
+                <img id="mainPhoto" class="image" src="aa.jpg" alt="Image 1" />
+            </div>
+            <button class="button" onclick="changePhoto()">Change Photo</button>
+        </div>
+    </div>
+
+    <script>
+        const photos = [
+            "10.jpg",
+            '2.jpg',
+            '12.jpg',
+            '4.jpg',
+            '15.jpg',
+            '6.jpg',
+            '7.jpg',
+            '8.jpg',
+            '11.jpg',
+            '1.jpg',
+            '12.jpg',
+            '13.jpg',
+            '5.jpg',
+            '16.jpg',
+            '3.jpg',
+            '5.jpg',
+            // Add more image URLs as needed
+        ];
+
+        let currentIndex = 0;
+        let passwordEntered = false;
+        let intervalId;
+
+        function changePhoto() {
+            if (!passwordEntered) {
+                const password = prompt("oh! sorry this is private, Please enter the password to access the photo gallery:");
+                if (password === "2505") {
+                    alert("welcome to the prayu gallery");
+                    passwordEntered = true;
+                    showNextPhotoWithDelay();
+                    showBalloon();
+                } else {
+                    alert("oh! sorry, Incorrect password. Access denied!");
+                }
+            } else {
+                clearInterval(intervalId); // Clear any existing interval
+                showNextPhotoWithDelay();
+            }
+        }
+
+        function showBalloon() {
+            const balloon = document.createElement('div');
+            balloon.innerHTML = '🎈'; // You can use an image here
+            balloon.classList.add('balloon');
+            document.body.appendChild(balloon);
+        }
+
+        function showNextPhotoWithDelay() {
+            if (passwordEntered) {
+                intervalId = setInterval(() => {
+                    currentIndex = (currentIndex + 1) % photos.length;
+                    document.getElementById('mainPhoto').src = photos[currentIndex];
+                }, 1500); // Change photo every 1.5 seconds (1500 milliseconds)
+            }
+        }
+    </script>
+</body>
+</html>

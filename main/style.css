@@ -1,0 +1,12 @@
+
+
+
+body {
+    background-color: #f000;    
+    margin: 0px;
+    overflow: hidden;
+    left: 10px;
+    right: 10px;
+    height: 40px;
+    background-repeat: no-repeat;
+}
